@@ -208,7 +208,6 @@ public class Postfixex {
 
 
 
-
 import java.util.Scanner;
 
 public class BalancedParentheses {
@@ -217,17 +216,27 @@ public class BalancedParentheses {
     static class Stack {
         char[] arr;
         int top;
+        int capacity;
 
         Stack(int size) {
-            arr = new char[size];
+            capacity = size;
+            arr = new char[capacity];
             top = -1;
         }
 
+        // Push with overflow check
         void push(char ch) {
+            if (top == capacity - 1) {
+                return; // Stack Overflow
+            }
             arr[++top] = ch;
         }
 
+        // Pop with underflow check
         char pop() {
+            if (top == -1) {
+                return '\0'; // Stack Underflow
+            }
             return arr[top--];
         }
 
@@ -280,6 +289,3 @@ public class BalancedParentheses {
         sc.close();
     }
 }
-
-
-
