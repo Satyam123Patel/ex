@@ -133,56 +133,44 @@ public class CircularQueue {
 
 
 
-🔹 Problem Recap
-
-Input (postfix expression):
-
-5 6 2 + * 12 4 / -
 
 
-Output:
-
-37
-
-
-
+package ArrayQueueBinaryNo;
 
 import java.util.Scanner;
 
-public class PostfixEvaluation {
+public class Postfixex {
 
-    // Stack implementation using array
-    static class Stack {
-        int[] arr;
-        int top;
+    int[] arr;
+    int top;
+    int capacity;
 
-        Stack(int size) {
-            arr = new int[size];
-            top = -1;
-        }
-
-        void push(int value) {
-            arr[++top] = value;
-        }
-
-        int pop() {
-            return arr[top--];
-        }
+    Postfixex(int size) {
+        capacity = size;
+        arr = new int[size];
+        top = -1;
     }
 
-    static int evaluatePostfix(String expression) {
+    void push(int value) {
+        if (top == capacity - 1) return;
+        arr[++top] = value;
+    }
+
+    int pop() {
+        if (top == -1) return -1;
+        return arr[top--];
+    }
+
+    static int Postfixexp(String expression) {
 
         String[] tokens = expression.split(" ");
-        Stack stack = new Stack(tokens.length);
+        Postfixex stack = new Postfixex(tokens.length);
 
         for (String token : tokens) {
 
-            // If operand (number)
             if (Character.isDigit(token.charAt(0))) {
                 stack.push(Integer.parseInt(token));
-            }
-            // If operator
-            else {
+            } else {
                 int b = stack.pop();
                 int a = stack.pop();
 
@@ -210,7 +198,7 @@ public class PostfixEvaluation {
         Scanner sc = new Scanner(System.in);
         String postfix = sc.nextLine();
 
-        int result = evaluatePostfix(postfix);
+        int result = Postfixexp(postfix);
         System.out.println(result);
 
         sc.close();
