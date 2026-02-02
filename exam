@@ -1,0 +1,297 @@
+package Stack;
+
+public class Queue1 {
+
+    // Queue variables (NOT static)
+    String[] queue;
+    int front, rear, capacity;
+
+    // Constructor
+    Queue1(int size) {
+        capacity = size;
+        queue = new String[capacity];
+        front = 0;
+        rear = -1;
+    }
+
+    // Enqueue
+    void enqueue(String value) {
+        if (rear == capacity - 1) {
+            return;
+        }
+        queue[++rear] = value;
+    }
+
+    // Dequeue
+    String dequeue() {
+        if (front > rear) {
+            return null;
+        }
+        return queue[front++];
+    }
+
+    // Generate binary numbers
+    static void generateBinary(int n) {
+        Queue1 q = new Queue1(2 * n);
+
+        q.enqueue("1");
+
+        for (int i = 1; i <= n; i++) {
+            String current = q.dequeue();
+            System.out.print(current + " ");
+
+            q.enqueue(current + "0");
+            q.enqueue(current + "1");
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        generateBinary(n);
+    }
+}
+
+
+
+
+import java.util.Scanner;
+
+public class CircularQueue {
+
+    int[] arr;
+    int front, rear, size, count;
+
+    CircularQueue(int n) {
+        size = n;
+        arr = new int[size];
+        front = 0;
+        rear = -1;
+        count = 0;
+    }
+
+    void enqueue(int value) {
+        if (count == size) {
+            return; // Queue Overflow
+        }
+        rear = (rear + 1) % size;
+        arr[rear] = value;
+        count++;
+    }
+
+    void dequeue() {
+        if (count == 0) {
+            return; // Queue Underflow
+        }
+        front = (front + 1) % size;
+        count--;
+    }
+
+    
+    void display() {
+        if (count == 0) {
+            return;
+        }
+        int i = front;
+        for (int c = 0; c < count; c++) {
+            System.out.print(arr[i] + " ");
+            i = (i + 1) % size;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        // Read size of queue
+        int n = sc.nextInt();
+        sc.nextLine(); // consume newline
+
+        CircularQueue queue = new CircularQueue(n);
+
+        while (true) {
+            String command = sc.nextLine();
+
+            if (command.equals("STOP")) {
+                break;
+            } 
+            else if (command.startsWith("ENQUEUE")) {
+                int value = Integer.parseInt(command.split(" ")[1]);
+                queue.enqueue(value);
+            } 
+            else if (command.equals("DEQUEUE")) {
+                queue.dequeue();
+            } 
+            else if (command.equals("DISPLAY")) {
+                queue.display();
+            }
+        }
+
+        sc.close();
+    }
+}
+
+
+
+🔹 Problem Recap
+
+Input (postfix expression):
+
+5 6 2 + * 12 4 / -
+
+
+Output:
+
+37
+
+
+
+
+import java.util.Scanner;
+
+public class PostfixEvaluation {
+
+    // Stack implementation using array
+    static class Stack {
+        int[] arr;
+        int top;
+
+        Stack(int size) {
+            arr = new int[size];
+            top = -1;
+        }
+
+        void push(int value) {
+            arr[++top] = value;
+        }
+
+        int pop() {
+            return arr[top--];
+        }
+    }
+
+    static int evaluatePostfix(String expression) {
+
+        String[] tokens = expression.split(" ");
+        Stack stack = new Stack(tokens.length);
+
+        for (String token : tokens) {
+
+            // If operand (number)
+            if (Character.isDigit(token.charAt(0))) {
+                stack.push(Integer.parseInt(token));
+            }
+            // If operator
+            else {
+                int b = stack.pop();
+                int a = stack.pop();
+
+                switch (token) {
+                    case "+":
+                        stack.push(a + b);
+                        break;
+                    case "-":
+                        stack.push(a - b);
+                        break;
+                    case "*":
+                        stack.push(a * b);
+                        break;
+                    case "/":
+                        stack.push(a / b);
+                        break;
+                }
+            }
+        }
+        return stack.pop();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        String postfix = sc.nextLine();
+
+        int result = evaluatePostfix(postfix);
+        System.out.println(result);
+
+        sc.close();
+    }
+}
+
+
+
+
+
+import java.util.Scanner;
+
+public class BalancedParentheses {
+
+    // Stack using array
+    static class Stack {
+        char[] arr;
+        int top;
+
+        Stack(int size) {
+            arr = new char[size];
+            top = -1;
+        }
+
+        void push(char ch) {
+            arr[++top] = ch;
+        }
+
+        char pop() {
+            return arr[top--];
+        }
+
+        boolean isEmpty() {
+            return top == -1;
+        }
+    }
+
+    static boolean isBalanced(String expr) {
+
+        Stack stack = new Stack(expr.length());
+
+        for (int i = 0; i < expr.length(); i++) {
+            char ch = expr.charAt(i);
+
+            // Opening brackets
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack.push(ch);
+            }
+            // Closing brackets
+            else if (ch == ')' || ch == '}' || ch == ']') {
+
+                if (stack.isEmpty()) {
+                    return false;
+                }
+
+                char top = stack.pop();
+
+                if ((ch == ')' && top != '(') ||
+                    (ch == '}' && top != '{') ||
+                    (ch == ']' && top != '[')) {
+                    return false;
+                }
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        String expression = sc.nextLine();
+
+        if (isBalanced(expression)) {
+            System.out.println("Balanced");
+        } else {
+            System.out.println("Not Balanced");
+        }
+
+        sc.close();
+    }
+}
+
+
+
