@@ -289,3 +289,186 @@ public class BalancedParentheses {
         sc.close();
     }
 }
+
+
+
+
+public class StackArray {
+
+    int[] arr;
+    int top;
+    int size;
+
+    StackArray(int n) {
+        size = n;
+        arr = new int[size];
+        top = -1;
+    }
+
+    void push(int value) {
+        if (top == size - 1) {
+            System.out.println("Stack Overflow");
+            return;
+        }
+        arr[++top] = value;
+    }
+
+    int pop() {
+        if (top == -1) {
+            System.out.println("Stack Underflow");
+            return -1;
+        }
+        return arr[top--];
+    }
+
+    int peek() {
+        if (top == -1) return -1;
+        return arr[top];
+    }
+
+    boolean isEmpty() {
+        return top == -1;
+    }
+
+    public static void main(String[] args) {
+        StackArray s = new StackArray(5);
+        s.push(10);
+        s.push(20);
+        System.out.println(s.pop());
+        System.out.println(s.peek());
+        System.out.println(s.isEmpty());
+    }
+}
+
+
+
+public class QueueArray {
+
+    int[] arr;
+    int front, rear, size;
+
+    QueueArray(int n) {
+        size = n;
+        arr = new int[size];
+        front = 0;
+        rear = -1;
+    }
+
+    void enqueue(int value) {
+        if (rear == size - 1) {
+            System.out.println("Queue Overflow");
+            return;
+        }
+        arr[++rear] = value;
+    }
+
+    int dequeue() {
+        if (front > rear) {
+            System.out.println("Queue Underflow");
+            return -1;
+        }
+        return arr[front++];
+    }
+
+    void display() {
+        for (int i = front; i <= rear; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        QueueArray q = new QueueArray(5);
+        q.enqueue(1);
+        q.enqueue(2);
+        q.enqueue(3);
+        q.display();
+        q.dequeue();
+        q.display();
+    }
+}
+
+
+public class ReverseString {
+
+    static String reverse(String str) {
+        char[] stack = new char[str.length()];
+        int top = -1;
+
+        for (int i = 0; i < str.length(); i++) {
+            stack[++top] = str.charAt(i);
+        }
+
+        String result = "";
+        while (top != -1) {
+            result += stack[top--];
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String input = "HELLO";
+        System.out.println(reverse(input));
+    }
+}
+
+
+
+public class ReverseArray {
+
+    static void reverse(int[] arr) {
+        int[] stack = new int[arr.length];
+        int top = -1;
+
+        for (int i = 0; i < arr.length; i++) {
+            stack[++top] = arr[i];
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = stack[top--];
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        reverse(arr);
+
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+    }
+}
+
+
+
+public class PalindromeCheck {
+
+    static boolean isPalindrome(String str) {
+        char[] stack = new char[str.length()];
+        int top = -1;
+
+        for (int i = 0; i < str.length(); i++) {
+            stack[++top] = str.charAt(i);
+        }
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != stack[top--]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String input = "MADAM";
+
+        if (isPalindrome(input)) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not Palindrome");
+        }
+    }
+}
+
+
+
