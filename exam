@@ -471,4 +471,185 @@ public class PalindromeCheck {
 }
 
 
+public class StackString {
+
+    String[] arr;
+    int top;
+    int size;
+
+    StackString(int n) {
+        size = n;
+        arr = new String[size];
+        top = -1;
+    }
+
+    void push(String value) {
+        if (top == size - 1) {
+            System.out.println("Stack Overflow");
+            return;
+        }
+        arr[++top] = value;
+    }
+
+    String pop() {
+        if (top == -1) {
+            System.out.println("Stack Underflow");
+            return null;
+        }
+        return arr[top--];
+    }
+
+    String peek() {
+        if (top == -1) return null;
+        return arr[top];
+    }
+
+    boolean isEmpty() {
+        return top == -1;
+    }
+
+    public static void main(String[] args) {
+        StackString s = new StackString(5);
+        s.push("A");
+        s.push("B");
+        System.out.println(s.pop());
+        System.out.println(s.peek());
+        System.out.println(s.isEmpty());
+    }
+}
+
+
+
+public class QueueString {
+
+    String[] arr;
+    int front, rear, size;
+
+    QueueString(int n) {
+        size = n;
+        arr = new String[size];
+        front = 0;
+        rear = -1;
+    }
+
+    void enqueue(String value) {
+        if (rear == size - 1) {
+            System.out.println("Queue Overflow");
+            return;
+        }
+        arr[++rear] = value;
+    }
+
+    String dequeue() {
+        if (front > rear) {
+            System.out.println("Queue Underflow");
+            return null;
+        }
+        return arr[front++];
+    }
+
+    void display() {
+        for (int i = front; i <= rear; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        QueueString q = new QueueString(5);
+        q.enqueue("One");
+        q.enqueue("Two");
+        q.enqueue("Three");
+        q.display();
+        q.dequeue();
+        q.display();
+    }
+}
+
+
+
+public class ReverseStringStack {
+
+    static String reverse(String str) {
+        char[] stack = new char[str.length()];
+        int top = -1;
+
+        for (int i = 0; i < str.length(); i++) {
+            stack[++top] = str.charAt(i);
+        }
+
+        String result = "";
+        while (top != -1) {
+            result += stack[top--];
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+        String input = "HELLO";
+        System.out.println(reverse(input));
+    }
+}
+
+
+
+public class ReverseStringArray {
+
+    static void reverse(String[] arr) {
+        String[] stack = new String[arr.length];
+        int top = -1;
+
+        for (int i = 0; i < arr.length; i++) {
+            stack[++top] = arr[i];
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = stack[top--];
+        }
+    }
+
+    public static void main(String[] args) {
+        String[] arr = {"A", "B", "C"};
+        reverse(arr);
+
+        for (String s : arr) {
+            System.out.print(s + " ");
+        }
+    }
+}
+
+
+
+
+public class PalindromeString {
+
+    static boolean isPalindrome(String str) {
+        char[] stack = new char[str.length()];
+        int top = -1;
+
+        for (int i = 0; i < str.length(); i++) {
+            stack[++top] = str.charAt(i);
+        }
+
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) != stack[top--]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        String input = "MADAM";
+
+        if (isPalindrome(input)) {
+            System.out.println("Palindrome");
+        } else {
+            System.out.println("Not Palindrome");
+        }
+    }
+}
+
+
+
 
